@@ -19,7 +19,7 @@ RUN microdnf install -y wget bzip2 && \
 WORKDIR /app
 
 # Create the Jupyter runtime directory with appropriate permissions
-RUN mkdir -p /app/.jupyter && chown -R 1001:0 /app/.jupyter
+RUN mkdir -p /app/.jupyter
 
 # Copy the application code
 COPY . /app

@@ -20,6 +20,7 @@ WORKDIR /app
 
 # Create the Jupyter runtime directory with appropriate permissions
 RUN mkdir -p /app/.jupyter
+RUN chmod -R g+rwX /app/.jupyter
 
 # Copy the application code
 COPY . /app

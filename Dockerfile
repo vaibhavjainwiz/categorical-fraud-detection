@@ -2,7 +2,8 @@
 FROM registry.access.redhat.com/ubi9/ubi-minimal:9.4
 
 # Set environment variables
-ENV PATH=/opt/conda/bin:$PATH
+ENV PATH=/opt/conda/bin:$PATH \
+    KAGGLE_CONFIG_DIR=/app/kaggle
 
 # Install necessary packages, download Miniconda, and clean up in one layer
 RUN microdnf install -y wget bzip2 && \
@@ -29,5 +30,5 @@ ENV PATH /opt/conda/envs/$CONDA_DEFAULT_ENV/bin:$PATH
 # Expose a port if necessary
 EXPOSE 8080
 
-# Keep the container running (or replace with desired command)
-CMD ["tail", "-f", "/dev/null"]
+# Set the default command to run Jupyter Notebook
+CMD ["bash", "-c", "source activate triton_example && jupyter notebook --ip=0.0.0.0 --port=8080 --no-browser --allow-root"]

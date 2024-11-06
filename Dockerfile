@@ -3,7 +3,9 @@ FROM registry.access.redhat.com/ubi9/ubi-minimal:9.4
 
 # Set environment variables
 ENV PATH=/opt/conda/bin:$PATH \
-    KAGGLE_CONFIG_DIR=/app/kaggle
+    KAGGLE_CONFIG_DIR=/app/kaggle \
+    JUPYTER_RUNTIME_DIR=/app/.jupyter \
+    HOME=/app
 
 # Install necessary packages, download Miniconda, and clean up in one layer
 RUN microdnf install -y wget bzip2 && \
@@ -15,6 +17,9 @@ RUN microdnf install -y wget bzip2 && \
 
 # Set the working directory
 WORKDIR /app
+
+# Create the Jupyter runtime directory with appropriate permissions
+RUN mkdir -p /app/.jupyter && chown -R 1001:0 /app/.jupyter
 
 # Copy the application code
 COPY . /app

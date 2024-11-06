@@ -2,11 +2,7 @@
 FROM registry.access.redhat.com/ubi9/ubi-minimal:9.4
 
 # Set environment variables
-ENV PATH=/opt/conda/bin:$PATH \
-    CONDA_PKGS_DIRS=/app/conda_pkgs \
-    CONDA_ENVS_DIRS=/app/conda_envs \
-    CONDA_CACHE_DIR=/app/conda_cache \
-    KAGGLE_CONFIG_DIR=/app/kaggle
+ENV PATH=/opt/conda/bin:$PATH
 
 # Install necessary packages, download Miniconda, and clean up in one layer
 RUN microdnf install -y wget bzip2 && \
@@ -16,19 +12,19 @@ RUN microdnf install -y wget bzip2 && \
     microdnf clean all && \
     /opt/conda/bin/conda clean -afy
 
-# Create cache directories in a single layer to reduce image size
-RUN mkdir -p /app/conda_pkgs /app/conda_envs /app/conda_cache && \
-    chmod -R 777 /app
-
 # Set the working directory
 WORKDIR /app
 
 # Copy the application code
 COPY . /app
 
-# Set default environment and path
-ENV CONDA_DEFAULT_ENV=triton_example \
-    PATH=/opt/conda/envs/$CONDA_DEFAULT_ENV/bin:$PATH
+# Create and activate a conda environment with dependencies from environment.yml
+RUN conda env create -f environment.yml && \
+    conda clean -afy
+
+# Activate environment and set it as default for the container
+ENV CONDA_DEFAULT_ENV=triton_example
+ENV PATH /opt/conda/envs/$CONDA_DEFAULT_ENV/bin:$PATH
 
 # Expose a port if necessary
 EXPOSE 8080

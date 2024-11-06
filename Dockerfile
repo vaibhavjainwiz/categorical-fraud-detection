@@ -8,7 +8,7 @@ ENV PATH=/opt/conda/bin:$PATH \
     HOME=/app
 
 # Install necessary packages, download Miniconda, and clean up in one layer
-RUN microdnf install -y wget bzip2 && \
+RUN microdnf install -y wget bzip2 unzip && \
     wget -q https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /miniconda.sh && \
     bash /miniconda.sh -b -p /opt/conda && \
     rm /miniconda.sh && \
@@ -19,8 +19,8 @@ RUN microdnf install -y wget bzip2 && \
 WORKDIR /app
 
 # Create the Jupyter runtime directory with appropriate permissions
-RUN mkdir -p /app/.jupyter && chmod -R g+rwX /app/.jupyter && \
-    mkdir -p /app/.local && chmod -R g+rwX /app/.local
+RUN mkdir -p /app/.jupyter && mkdir -p /app/.local && \
+    chmod -R g+rwX /app
 
 # Copy the application code
 COPY . /app

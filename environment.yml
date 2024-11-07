@@ -5,9 +5,9 @@ channels:
   - nvidia
   - rapidsai
 dependencies:
-  - cudatoolkit=11.5
-  - cudf=22.10
-  - cuml=22.10
+  - cudatoolkit
+  - cudf
+  - cuml
   - cupy
   - jupyter
   - kaggle
@@ -15,7 +15,7 @@ dependencies:
   - numpy
   - pandas
   - pip
-  - python=3.8
+  - python
   - scikit-learn<1.2.0
   - pip:
       - tritonclient[all]

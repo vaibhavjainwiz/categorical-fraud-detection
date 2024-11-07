@@ -20,4 +20,4 @@ dependencies:
   - pip:
       - tritonclient[all]
       - protobuf==3.20.1
-      - xgboost>=1.5,<1.6
+      - xgboost

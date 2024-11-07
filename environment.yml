@@ -5,9 +5,9 @@ channels:
   - nvidia
   - rapidsai
 dependencies:
-  - cudatoolkit=12.2
-  - cudf=23.08  # Adjusted to the latest RAPIDS version for CUDA 12.2
-  - cuml=23.08  # Same version as `cudf`
+  - cudatoolkit=11.5
+  - cudf=22.10
+  - cuml=22.10
   - cupy
   - jupyter
   - kaggle
